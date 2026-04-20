@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home</title>
+</head>
+<body>
+
+	<h2>Home Page</h2>
+
+	<button onclick="callApi()">Call Protected API</button>
+	<button onclick="logout()">Logout</button>
+
+	<script>
+async function callApi() {
+
+    let accessToken = localStorage.getItem("accessToken");
+
+    let response = await fetch('/testPostman', {
+        headers: {
+            Authorization: 'Bearer ' + accessToken
+        }
+    });
+
+    // 🔥 If token expired
+    if (response.status === 401) {
+
+        console.log("Access token expired, refreshing...");
+
+        let refreshToken = localStorage.getItem("refreshToken");
+
+        let refreshRes = await fetch('/refresh', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ refreshToken })
+        });
+
+        let newAccessToken = await refreshRes.text();
+
+        // 🔥 store new access token
+        localStorage.setItem("accessToken", newAccessToken);
+
+        // 🔁 retry original request
+        response = await fetch('/testPostman', {
+            headers: {
+                Authorization: 'Bearer ' + newAccessToken
+            }
+        });
+    }
+
+    const data = await response.text();
+    alert(data);
+}
+
+function logout() {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    window.location.href = "/LoginPage.html";
+}
+</script>
+
+</body>
+</html>

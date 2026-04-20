@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background: linear-gradient(135deg, #667eea, #764ba2);
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.login-box {
+	background: #fff;
+	padding: 30px;
+	border-radius: 10px;
+	width: 320px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+	text-align: center;
+}
+
+h2 {
+	margin-bottom: 20px;
+}
+
+input {
+	width: 100%;
+	padding: 10px;
+	margin: 10px 0;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+button {
+	width: 100%;
+	padding: 10px;
+	background: #667eea;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+button:hover {
+	background: #5a67d8;
+}
+
+.signup-link {
+	margin-top: 15px;
+}
+
+.signup-link a {
+	text-decoration: none;
+	color: #667eea;
+	font-weight: bold;
+}
+
+.signup-link a:hover {
+	text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+	<div class="login-box">
+		<h2>Login</h2>
+
+		<form onsubmit="loginUser(event)">
+			<input type="text" name="username" required> <input
+				type="password" name="password" required>
+			<button type="submit">Login</button>
+		</form>
+
+		<div class="signup-link">
+			<p>Don't have an account?</p>
+			<a href="/signup.html">Sign Up</a>
+		</div>
+	</div>
+
+
+
+	<script>
+function loginUser(event) {
+    event.preventDefault();
+
+    const username = document.querySelector('input[name="username"]').value;
+    const password = document.querySelector('input[name="password"]').value;
+
+    fetch('/usrLogin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json','Authorization': 'Bearer ' + localStorage.getItem("token")},
+        body: JSON.stringify({ username, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+        // 🔥 store both tokens
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
+
+        alert("Login success");
+        window.location.href = "/home.html"; // optional page
+    });
+}
+</script>
+
+</body>
+</html>
