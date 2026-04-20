@@ -1,9 +1,15 @@
 package com.devmind.model.kafka;
 
+import java.io.Serializable;
 
-public class Order {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public class Order implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	@JsonProperty
 	private String orderId;
+	@JsonProperty
 	private String product;
 
 	public Order() {
