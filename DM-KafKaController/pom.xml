@@ -12,7 +12,7 @@
 	</parent>
 
 
-	<artifactId>DM-Controller</artifactId>
+	<artifactId>DM-KafkaController</artifactId>
 	<packaging>war</packaging>
 	<name>DevMind-Controller</name>
 	<description>DevMind Controller</description>
@@ -91,7 +91,12 @@
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
-			 <version>3.2.5</version> 
+			<version>3.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.7.3</version>
 		</dependency>
 	</dependencies>
 </project>

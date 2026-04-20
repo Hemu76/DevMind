@@ -27,6 +27,8 @@
 		<module>../DM-Model</module>
 		<module>../DM-java</module>
 		<module>../DM-Controller</module>
+		<module>../DM-kafkaController</module>
+		<module>../DM-RestController</module>
 	</modules>
 
 	<dependencyManagement>
@@ -46,6 +48,11 @@
 			<dependency>
 				<groupId>org.springframework.kafka</groupId>
 				<artifactId>spring-kafka</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>42.7.3</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
